@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<psalm
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <xi:include href="vendor/movavi/code-analyze-tools/config/ignore_files.xml" xpointer="xmlns(p=https://getpsalm.org/schema/config)xpointer(/p:ignoreFiles/*)"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
+        <pluginClass class="Movavi\CodeAnalyzeTools\Psalm\Plugin\ConfigIssue"/>
+    </plugins>
+</psalm>

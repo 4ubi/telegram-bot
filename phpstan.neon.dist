@@ -1,0 +1,5 @@
+includes:
+  - vendor/movavi/code-analyze-tools/config/phpstan.neon.dist
+
+parameters:
+  checkGenericClassInNonGenericObjectType: false

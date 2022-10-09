@@ -7,15 +7,15 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "botman/botman": "^2.7",
-        "botman/driver-telegram": "^2.0",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "guzzlehttp/guzzle": "^7.5",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.1.*",
+        "symfony/monolog-bundle": "^3.8",
         "symfony/runtime": "6.1.*",
         "symfony/yaml": "6.1.*"
     },
@@ -63,22 +63,7 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ],
-        "code-analyze": [
-            "phpstan-changes master",
-            "psalm-changes master"
-        ],
-        "code-analyze-all": [
-            "phpstan",
-            "psalm"
-        ],
-        "cs-fixer": "cs-fixer-changes master",
-        "cs-fixer-fix": "cs-fixer-fix master",
-        "code-check": [
-            "@code-analyze",
-            "@cs-fixer"
         ]
-
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -88,11 +73,5 @@
             "allow-contrib": false,
             "require": "6.1.*"
         }
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://satis.nsk.movavi.com:8443/"
-        }
-    ]
+    }
 }

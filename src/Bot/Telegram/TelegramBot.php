@@ -2,34 +2,52 @@
 
 namespace App\Bot\Telegram;
 
-use App\BotFactory\BotFactory;
-use App\Enum\SystemsEnum;
-use BotMan\BotMan\BotMan;
+use App\Bot\Telegram\Enum\BotScenarioCommandsEnum;
+use App\Bot\Telegram\Model\Message;
+use App\Bot\Telegram\ScenarioCommand\ScenarioCommandInterface;
+use App\Bot\Telegram\ScenarioCommand\ScenarioResult;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\RequestOptions;
+use Symfony\Component\HttpFoundation\Request;
 
 class TelegramBot
 {
-    readonly ?BotMan $telegramBotMan;
+    public const SEND_VIDEO_METHOD = 'sendVideo';
+    public const SEND_MESSAGE_METHOD = 'sendMessage';
+    public const SEND_VIDEO_NOTE_METHOD = 'sendVideoNote';
 
-    public function __construct(readonly array $config)
+    /**
+     * @param ClientInterface $client
+     * @param ScenarioCommandInterface[] $scenaries
+     */
+    public function __construct(private ClientInterface $client, private iterable $scenaries)
     {
-        $this->telegramBotMan = null;
     }
 
-    public function getBotMan(): ?BotMan
+    public function handleMessage(Message $message): void
     {
-        return $this->init();
-    }
+        foreach ($this->scenaries as $scenario) {
+            if (!$scenario->support($message)) {
+                continue;
+            }
 
+            $resultScenario = $scenario->process($message);
 
-    private function init(): BotMan
-    {
-        if ($this->telegramBotMan) {
-            return $this->telegramBotMan;
+            $this->sendResultAction($resultScenario);
         }
+    }
 
-
-        $botFactory = new BotFactory();
-
-        return $botFactory->create($this->config, SystemsEnum::TELEGRAM);
+    private function sendResultAction(ScenarioResult $result): void
+    {
+        $this->client->request(
+            $result->method,
+            $result->actionApiMethod,
+            [
+                RequestOptions::HEADERS => [
+                    "Content-Type" => "application/json",
+                ],
+                RequestOptions::BODY    => json_encode($result->result),
+            ]
+        );
     }
 }

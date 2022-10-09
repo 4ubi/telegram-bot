@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     env(TELEGRAM_TOKEN): ~
+    env(TELEGRAM_URI): 'https://api.telegram.org/bot%env(TELEGRAM_TOKEN)%/'
 
 services:
     # default configuration for services in *this* file
@@ -12,6 +13,9 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    _instanceof:
+        App\Bot\Telegram\ScenarioCommand\ScenarioCommandInterface:
+            tags: ['app.scenario_telegram_bot']
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -21,9 +25,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    app.telegram_http_client:
+        class: GuzzleHttp\Client
+        arguments:
+            - { timeout: 30, base_uri: '%env(TELEGRAM_URI)%' }
 
     App\Bot\Telegram\TelegramBot:
         arguments:
-            $config:
-                telegram:
-                    token: '%env(TELEGRAM_TOKEN)%'
+            $client: '@app.telegram_http_client'
+            $scenaries: !tagged_iterator app.scenario_telegram_bot
+

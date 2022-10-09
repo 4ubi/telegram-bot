@@ -48,4 +48,10 @@ services:
       timeout: 2s
       retries: 5
 
+  composer_install:
+    image: composer:2.4
+    volumes:
+      - .:/app
+    command: composer install --ignore-platform-reqs
+
 

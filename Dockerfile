@@ -73,9 +73,7 @@ ENV TAG_VERSION=$TAG_VERSION
 ENV COMMIT_SHA=$COMMIT_SHA
 
 LABEL org.label-schema.name="telegrambot-backend:php:8.1-fpm-alpine" \
-      org.label-schema.vendor="Movavi" \
-      org.label-schema.url="https://telegrambot.movavi.com/" \
-      org.label-schema.description="Backend telegrambot.movavi.com" \
+      org.label-schema.vendor="4ubaka" \
       org.label-schema.version="${TAG_VERSION}" \
       org.label-schema.vcs-ref="${COMMIT_SHA}"
 

@@ -47,6 +47,9 @@
             ".php-cs-fixer.dist.php"
         ]
     },
+    "movavi/logger-bundle": {
+        "version": "v3.2.0"
+    },
     "symfony/console": {
         "version": "6.1",
         "recipe": {
@@ -88,6 +91,18 @@
             "public/index.php",
             "src/Controller/.gitignore",
             "src/Kernel.php"
+        ]
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.7",
+            "ref": "213676c4ec929f046dfde5ea8e97625b81bc0578"
+        },
+        "files": [
+            "config/packages/monolog.yaml"
         ]
     },
     "symfony/routing": {

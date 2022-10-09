@@ -1,5 +1,13 @@
 {
     "type": "project",
+    "authors": [
+        {
+            "name": "Alexandr Nomokonov",
+            "email": "nomokon2012@gmail.com",
+            "role": "Developer",
+            "homepage": "https://4ubi.github.io/"
+        }
+    ],
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
